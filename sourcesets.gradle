@@ -1,0 +1,47 @@
+logger.lifecycle( '----' )
+logger.lifecycle( "Defining sourceSets for project:   $project.name" )
+
+sourceSets {
+    main {
+        groovy {
+            srcDir 'src/main/groovy'
+        }
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+    test {
+        groovy {
+            srcDir 'src/test/groovy'
+        }
+        java {
+            srcDir 'src/test/java'
+        }
+        resources {
+            srcDir 'src/test/resources'
+        }
+    }
+    integration {
+        groovy {
+            srcDir 'src/integration/groovy'
+        }
+        java {
+            srcDir 'src/integration/java'
+        }
+        resources {
+            srcDir 'src/integration/resources'
+        }
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+
+    }
+}
+
+logger.info( 'The sourceSet output directories are: ' )
+sourceSets.all {
+    logger.info('   ' + name + ' -> ' + it.output.classesDir)
+}
+logger.info ( '----' )
