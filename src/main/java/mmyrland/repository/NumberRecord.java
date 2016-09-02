@@ -1,4 +1,4 @@
-package domain;
+package mmyrland.repository;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -11,8 +11,7 @@ public class NumberRecord extends FileRecord {
     @Column(name = "number_val")
     private Double numberVal;
 
-    public NumberRecord(TextFile textFile, String recordText, Double numberVal) {
-        this.setTextFile(textFile);
+    public NumberRecord(String recordText, Double numberVal) {
         this.setRecordText(recordText);
         this.numberVal = numberVal;
     }

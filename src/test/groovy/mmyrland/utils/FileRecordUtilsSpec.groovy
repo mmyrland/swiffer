@@ -1,4 +1,4 @@
-package utils
+package mmyrland.utils
 
 import spock.lang.Specification
 import spock.lang.Unroll

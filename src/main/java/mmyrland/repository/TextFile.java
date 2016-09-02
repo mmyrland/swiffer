@@ -1,8 +1,9 @@
-package domain;
+package mmyrland.repository;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,13 +18,15 @@ public class TextFile {
     @Column(name = "text_file_id")
     @Type(type="org.hibernate.type.PostgresUUIDType")
     private UUID textFileId;
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @Column(name = "date_created")
-    private DateTime dateCreated;
-    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "textFileId")
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.PERSIST}, mappedBy = "textFile")
     @OrderColumn(name = "record_text")
     private List<FileRecord> fileRecords;
     private byte[] content;
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @Column(name = "date_created")
+    @CreatedDate
+    private DateTime dateCreated;
+
 
     public TextFile(DateTime dateCreated, List<FileRecord> fileRecords, byte[] content) {
         this.dateCreated = dateCreated;

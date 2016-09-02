@@ -1,4 +1,4 @@
-package utils;
+package mmyrland.utils;
 
 import org.apache.commons.math3.util.Precision;
 

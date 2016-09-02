@@ -1,4 +1,4 @@
-package domain;
+package mmyrland.repository;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -7,8 +7,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("STRING")
 public class StringRecord extends FileRecord {
 
-    public StringRecord(TextFile textFile, String recordText) {
-        this.setTextFile(textFile);
+    public StringRecord(String recordText) {
         this.setRecordText(recordText);
     }
 
