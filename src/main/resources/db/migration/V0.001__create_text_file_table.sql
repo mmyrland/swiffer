@@ -1,5 +1,6 @@
 CREATE TABLE text_file (
   text_file_id UUID NOT NULL,
+  text_file_name TEXT NOT NULL,
   date_created TIMESTAMP NOT NULL,
   content           BYTEA     NULL,
   PRIMARY KEY (text_file_id)

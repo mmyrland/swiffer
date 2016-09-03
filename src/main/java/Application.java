@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication(scanBasePackages = "mmyrland")
 @EnableJpaAuditing
 @EnableJpaRepositories("mmyrland.repository")
-@EntityScan("mmyrland.repository")
+@EntityScan("mmyrland.domain")
 public class Application {
     public static void main(String[] args) {
 
