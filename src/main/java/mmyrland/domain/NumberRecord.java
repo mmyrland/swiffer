@@ -15,10 +15,9 @@ public class NumberRecord extends FileRecord {
     @Column(name = "number_val")
     private Double numberVal;
 
-    public NumberRecord(String recordText, Double numberVal) {
+    public NumberRecord(Double numberVal) {
         this.setFileRecordId(UUID.randomUUID());
         this.setDateCreated(DateTime.now(DateTimeZone.UTC));
-        this.setRecordText(recordText);
         this.numberVal = numberVal;
     }
 

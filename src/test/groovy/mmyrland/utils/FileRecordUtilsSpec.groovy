@@ -3,7 +3,6 @@ package mmyrland.utils
 import spock.lang.Specification
 import spock.lang.Unroll
 
-
 class FileRecordUtilsSpec extends Specification {
 
     @Unroll
@@ -19,7 +18,6 @@ class FileRecordUtilsSpec extends Specification {
         "string with only text"                      | "We are but boys grown tall" || false
         "empty string"                               | ""                           || false
         "padded empty string"                        | " "                          || false
-        "empty string"                               | null                         || false
     }
 
     def "listContains returns false when exact substring is not in any string in list."() {
@@ -95,4 +93,31 @@ class FileRecordUtilsSpec extends Specification {
         "list is empty"          | []               || 0d
         "random list of numbers" | [-1d, 51d, 250d] || 300d
     }
+
+    @Unroll
+    def "buildSortStringSet correctly sorts string values."() {
+        expect:
+        Map<String, Long> result = FileRecordUtils.buildSortStringSet(stringList)
+        result.size() == distinctListSize
+        result.get("two") == 2l
+
+        where:
+        stringList                                            | distinctListSize | line1count
+        ["one", "two", "two", "three", "four", "five", "six"] | 6                | 2l
+
+
+    }
+
+    def "getPercentage returns valid percentage."() {
+        expect:
+        percentage == FileRecordUtils.getPercentage(total, subTotal)
+
+        where:
+        total | subTotal | percentage
+        2     | 1        | 50
+        3     | 1        | 33.33
+        3     | 2        | 66.67
+        50    | 1        | 2
+    }
+
 }

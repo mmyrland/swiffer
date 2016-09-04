@@ -20,7 +20,6 @@ public class TextFile {
     @Column(name = "text_file_name")
     private String textFileName;
     @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE,CascadeType.PERSIST}, mappedBy = "textFile")
-    @OrderColumn(name = "record_text")
     private List<FileRecord> fileRecords;
     private byte[] content;
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")

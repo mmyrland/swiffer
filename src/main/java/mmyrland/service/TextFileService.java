@@ -2,6 +2,9 @@ package mmyrland.service;
 
 import mmyrland.controller.dto.FileResultsDto;
 import mmyrland.domain.FileRecord;
+import mmyrland.domain.TextFile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +14,9 @@ import java.util.UUID;
 public interface TextFileService {
 
     FileResultsDto process(File file) throws IOException;
-    List<FileRecord> findByTextFileId(UUID textFileId);
+    List<FileRecord> findRecordsByTextFileId(UUID textFileId);
     FileResultsDto getResults(String filename, UUID textFileId);
+    TextFile findOneFile(UUID textFileId);
+    Page<TextFile> findAllFiles(Pageable pageable);
 
 }
