@@ -26,7 +26,7 @@ Spring batch app that reads, processes and reports on files of a specific struct
 
 
 ## To run the application:
-* from the root directory, run `./gradlew -Dspring.profiles.active=local bootRun` (for Unix systems) or `gradlew.bat bootRun` (for Windows systems)
+* From the root directory, run `./gradlew -Dspring.profiles.active=local bootRun` (for Unix systems) or `gradlew.bat bootRun` (for Windows systems)
 * When you see a message like, `Started mmyrland.Application in *n* seconds` the application is running. You can access it
   via `http://localhost:8080`, and with `ctrl-c` to quit the application.
 
@@ -34,7 +34,7 @@ Spring batch app that reads, processes and reports on files of a specific struct
 API Documentation - REST Docs
 ====================
 ## Api documentation:
-* from project directory, run `./gradlew build jar`
-* create an application-local.properties file in the main resources directory using the application-local.properties.template as a guide
-* then run `java -jar -Dspring.profiles.active=local build/libs/swiffer-service.jar`
-* go to http://localhost:8080/docs/index.html
+* From project directory, run `./gradlew build jar`
+* Create an application-local.properties file in the main resources directory using the application-local.properties.template as a guide
+* Run `java -jar -Dspring.profiles.active=local build/libs/swiffer-service.jar`
+* Go to http://localhost:8080/docs/index.html
