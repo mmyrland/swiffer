@@ -3,7 +3,6 @@ package mmyrland.utils
 import spock.lang.Specification
 import spock.lang.Unroll
 
-
 class FileRecordUtilsSpec extends Specification {
 
     @Unroll
@@ -19,7 +18,6 @@ class FileRecordUtilsSpec extends Specification {
         "string with only text"                      | "We are but boys grown tall" || false
         "empty string"                               | ""                           || false
         "padded empty string"                        | " "                          || false
-        "empty string"                               | null                         || false
     }
 
     def "listContains returns false when exact substring is not in any string in list."() {
@@ -46,16 +44,30 @@ class FileRecordUtilsSpec extends Specification {
         result == true
     }
 
-    @Unroll
-    def "listContains returns #result when #scenario"() {
-        expect:
-        result == FileRecordUtils.listContains(stringList, substring)
 
-        where:
-        scenario             | stringList                       | substring                              || result
-        "substring is null"  | ["well now...", "LOOK OUT!!"]    | null                                   || false
-        "list contains null" | ["I'm not null, he is ->", null] | "I'm not null."                        || false
-        "list is null"       | null                             | "Well, what am I supposed to do then?" || false
+    def "listContains throws IllegalArgumentException when list is null"() {
+        given:
+        def subString = "Nobody to compare to..."
+
+        when:
+        FileRecordUtils.listContains(null, subString)
+
+        then:
+        IllegalArgumentException exception = thrown()
+        exception.getMessage() == "text lines and substring input for search must not be null."
+    }
+
+
+    def "listContains throws IllegalArgumentException when subString is null"() {
+        given:
+        def stringList = ["pi = 3.14 and more", "[insert math joke...]", " "]
+
+        when:
+        FileRecordUtils.listContains(stringList, null)
+
+        then:
+        IllegalArgumentException exception = thrown()
+        exception.getMessage() == "text lines and substring input for search must not be null."
     }
 
     @Unroll
@@ -92,7 +104,37 @@ class FileRecordUtilsSpec extends Specification {
         where:
         scenario                 | doubleList       || result
         "list size is 1"         | [1d]             || 1d
-        "list is empty"          | []               || 0d
+        "list is empty"          | []               || null
         "random list of numbers" | [-1d, 51d, 250d] || 300d
     }
+
+    @Unroll
+    def "buildSortStringSet correctly sorts string values."() {
+        expect:
+        LinkedHashMap<String, Long> result = FileRecordUtils.buildSortStringSet(stringList)
+        result.size() == distinctListSize
+        List<Map.Entry<String, Long>> resultList = new ArrayList<>(result.entrySet())
+        resultList.get(0).getKey() == firstKey
+        resultList.get(distinctListSize - 1).getKey() == lastKey
+
+        where:
+        stringList                                            | firstKey | lastKey | distinctListSize
+        ["one", "two", "two", "three", "four", "five", "six"] | "two"    | "five"  | 6
+        ["abc", "abc", "bac", "bac", "cab"]                   | "cab"    | "abc"   | 3
+
+
+    }
+
+    def "getPercentage returns valid percentage."() {
+        expect:
+        percentage == FileRecordUtils.getPercentage(total, subTotal)
+
+        where:
+        total | subTotal | percentage
+        2     | 1        | 50
+        3     | 1        | 33.33
+        3     | 2        | 66.67
+        50    | 1        | 2
+    }
+
 }

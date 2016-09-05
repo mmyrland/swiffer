@@ -27,5 +27,5 @@ Spring batch app that reads, processes and reports on files of a specific struct
 
 ## To run the application:
 * from the root directory, run `./gradlew -Dspring.profiles.active=local bootRun` (for Unix systems) or `gradlew.bat bootRun` (for Windows systems)
-* When you see a message like, `Started Application in *n* seconds` the application is running. You can access it
+* When you see a message like, `Started mmyrland.Application in *n* seconds` the application is running. You can access it
   via `http://localhost:8080`, and with `ctrl-c` to quit the application.

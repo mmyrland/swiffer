@@ -1,0 +1,43 @@
+[[text-file-find-one-valid]]
+=== GET Example
+
+Retrieves file object and corrosponding file records for processed file given valid file Id
+
+==== Request path parameters
+
+include::{snippets}/text-file-find-one-valid/path-parameters.adoc[]
+
+==== Response structure
+
+include::{snippets}/text-file-find-one-valid/response-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/text-file-find-one-valid/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/text-file-find-one-valid/http-response.adoc[]
+
+
+
+[[textfile-process-valid]]
+=== POST Example
+
+A `POST` request with a multipart file will submit a file for processing.
+
+==== Request parameters
+
+The multipart file, named as **file** is required. See example request.
+
+==== Example request
+
+include::{snippets}/textfile-process-valid/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/textfile-process-valid/http-response.adoc[]
+
+==== Example error response
+
+include::{snippets}/textfile-process-not-valid/http-response.adoc[]

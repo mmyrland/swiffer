@@ -1,5 +1,6 @@
 package mmyrland.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.Type;
@@ -19,12 +20,11 @@ public abstract class FileRecord {
     private UUID fileRecordId;
     @ManyToOne
     @JoinColumn(name = "text_file_id",insertable = false,updatable = false,referencedColumnName = "text_file_id")
+    @JsonIgnore
     private TextFile textFile;
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     @Column(name = "text_file_id",nullable = false)
     private UUID textFileId;
-    @Column(name = "record_text")
-    private String recordText;
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Column(name = "date_created")
     private DateTime dateCreated;
@@ -54,14 +54,6 @@ public abstract class FileRecord {
         this.textFileId = textFileId;
     }
 
-    public String getRecordText() {
-        return recordText;
-    }
-
-    public void setRecordText(String recordText) {
-        this.recordText = recordText;
-    }
-
     public DateTime getDateCreated() {
         return dateCreated;
     }
@@ -82,7 +74,6 @@ public abstract class FileRecord {
                 .append(fileRecordId, that.fileRecordId)
                 .append(textFile, that.textFile)
                 .append(textFileId, that.textFileId)
-                .append(recordText, that.recordText)
                 .append(dateCreated, that.dateCreated)
                 .isEquals();
     }
@@ -93,7 +84,6 @@ public abstract class FileRecord {
                 .append(fileRecordId)
                 .append(textFile)
                 .append(textFileId)
-                .append(recordText)
                 .append(dateCreated)
                 .toHashCode();
     }
