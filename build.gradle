@@ -22,7 +22,7 @@ apply plugin: 'io.spring.dependency-management'
 ext { buildTime = new Date().format("yyyyMMddHHmm") }
 
 springBoot {
-    mainClass = 'swiffer.Application'
+    mainClass = 'Application'
 }
 
 repositories {
@@ -31,7 +31,7 @@ repositories {
 
 bootRun {
     systemProperties = System.properties
-    main = 'swiffer.Application'
+    main = 'Application'
 }
 
 configurations {
@@ -55,11 +55,10 @@ dependencies {
 
     // persistence
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-jdbc")
     compile("org.jadira.usertype:usertype.core:5.0.0.GA")
     compile("org.postgresql:postgresql:${postgresqlVersion}")
-    compile("org.flywaydb:flyway-core:4.0.1")
+    compile("org.flywaydb:flyway-core")
 
     compile('org.apache.commons:commons-math3:3.6.1')
 
