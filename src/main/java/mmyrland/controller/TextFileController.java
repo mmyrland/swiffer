@@ -30,10 +30,6 @@ public class TextFileController {
     @RequestMapping(value = "/load", method = RequestMethod.POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity loadFile(@RequestParam("file") MultipartFile inputFile) throws IOException {
 
-    // Should strongly typed response and
-    // use global exception handler or internal exception library
-    // if data is consumed downstream
-
         if(!inputFile.getOriginalFilename().endsWith(".txt")){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file type; please try again with .txt file.");
         }
@@ -46,12 +42,16 @@ public class TextFileController {
     }
 
     @RequestMapping(value = "/{textFileId}", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<TextFile> findOneFile(@PathVariable UUID textFileId) throws IOException {
+    public ResponseEntity findOneFile(@PathVariable UUID textFileId) throws IOException {
 
         TextFile response = textFileService.findOneFile(textFileId);
+        if(response == null){
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND).build();
+        }
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(response);
     }
 
@@ -61,7 +61,7 @@ public class TextFileController {
         Page<TextFile> response = textFileService.findAllFiles(pageable);
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(response);
     }
 }

@@ -2,9 +2,7 @@ package mmyrland.utils;
 
 import org.apache.commons.math3.util.Precision;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -34,7 +32,7 @@ public class FileRecordUtils {
                 .anyMatch(l -> l.contains(subString));
     }
 
-//Using Double instead of primitive to allow nulls (valid if no number records exist in file)
+    //Using Double instead of primitive to allow nulls (valid if no number records exist in file)
     public static Double buildAverage(List<Double> numberList) {
 //Lets calling service determine how to handle null lists.
         if (numberList == null || numberList.size() == 0) {
@@ -50,7 +48,7 @@ public class FileRecordUtils {
     }
 
 
-//Using Double instead of primitive to allow nulls (valid if no number records exist in file)
+    //Using Double instead of primitive to allow nulls (valid if no number records exist in file)
     public static Double buildMedian(List<Double> numberList) {
         //Lets calling service determine how to handle null lists.
         if (numberList == null || numberList.size() == 0) {
@@ -69,7 +67,7 @@ public class FileRecordUtils {
 
     }
 
-//Using Double instead of primitive to allow nulls (valid if no number records exist in file)
+    //Using Double instead of primitive to allow nulls (valid if no number records exist in file)
     public static Double buildSum(List<Double> numberList) {
         //Lets calling service determine how to handle null lists.
         if (numberList == null || numberList.size() == 0) {
@@ -84,13 +82,29 @@ public class FileRecordUtils {
                 , 2);
     }
 
-    public static Map<String, Long> buildSortStringSet(List<String> textLines) {
-        Map<String, Long> stringMap = textLines.stream()
-                .sorted(Collections.reverseOrder())
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    public static LinkedHashMap<String, Long> buildSortStringSet(List<String> textLines) {
 
-        return stringMap;
+        //create comparator
+        Comparator<Map.Entry<String, Long>> byMapKey = (entry1, entry2) -> entry1.getKey().compareTo(
+                entry2.getKey());
 
+        //create map of distinct strings and their counts
+        Map<String, Long> stringMap =
+                textLines.stream()
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+
+        //create array list of entries to sort
+        List<Map.Entry<String, Long>> entryList = new ArrayList<>(stringMap.entrySet());
+
+        //sort map entries
+        Collections.sort(entryList, byMapKey.reversed());
+
+        //create sorted hashmap of values
+        LinkedHashMap<String, Long> stringHashMap = new LinkedHashMap<>();
+        entryList.stream().forEach(rl -> stringHashMap.put(rl.getKey(), rl.getValue()));
+
+        return stringHashMap;
     }
 
     public static Double getPercentage(Integer total, Integer subTotal) {
