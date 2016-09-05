@@ -2,7 +2,7 @@ package mmyrland.controller.dto;
 
 import org.springframework.format.annotation.NumberFormat;
 
-import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 
 public class FileResultsDto {
@@ -19,12 +19,12 @@ public class FileResultsDto {
     private int stringRecordCount;
     @NumberFormat(style = NumberFormat.Style.PERCENT)
     private Double stringRecordPercentage;
-    private Map<String,Long> distinctStringRecords;
+    private LinkedHashMap<String, Long> distinctStringRecords;
 
     public FileResultsDto() {
     }
 
-    public FileResultsDto(String fileName, UUID textFileId, int numberRecordCount, Double numberRecordSum, Double numberRecordMedian, Double numberRecordAvg, Double numberRecordPercentage, Double stringRecordPercentage, Map<String,Long> distinctStringRecords) {
+    public FileResultsDto(String fileName, UUID textFileId, int numberRecordCount, Double numberRecordSum, Double numberRecordMedian, Double numberRecordAvg, Double numberRecordPercentage, Double stringRecordPercentage, LinkedHashMap<String, Long> distinctStringRecords) {
         this.fileName = fileName;
         this.textFileId = textFileId;
         this.numberRecordCount = numberRecordCount;
@@ -116,11 +116,11 @@ public class FileResultsDto {
         this.stringRecordPercentage = stringRecordPercentage;
     }
 
-    public Map<String,Long> getDistinctStringRecords() {
+    public LinkedHashMap<String, Long> getDistinctStringRecords() {
         return distinctStringRecords;
     }
 
-    public void setDistinctStringRecords(Map<String,Long> distinctStringRecords) {
+    public void setDistinctStringRecords(LinkedHashMap<String, Long> distinctStringRecords) {
         this.distinctStringRecords = distinctStringRecords;
     }
 
