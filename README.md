@@ -36,5 +36,5 @@ API Documentation - REST Docs
 ## Api documentation:
 * From project directory, run `./gradlew build jar`
 * Create an application-local.properties file in the main resources directory using the application-local.properties.template as a guide
-* Run `java -jar -Dspring.profiles.active=local build/libs/swiffer-service.jar`
+* Run `java -jar -Dspring.profiles.active=local build/libs/swiffer-service-0.1.0.jar`
 * Go to http://localhost:8080/docs/index.html

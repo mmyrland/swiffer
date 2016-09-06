@@ -3,6 +3,8 @@ package mmyrland.controller
 import mmyrland.domain.TextFile
 import mmyrland.repository.FileRecordRepository
 import mmyrland.repository.TextFileRepository
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.PathResource
 import org.springframework.http.MediaType
@@ -91,7 +93,7 @@ class TextFileControllerIntSpec extends BaseControllerIntSpec {
 
     void "/{textFileId} returns TextFile given valid textFileId."() {
         given:
-        def textFile = new TextFile("findOneTest.txt","findOneTest.txt".bytes)
+        def textFile = new TextFile(UUID.randomUUID(),DateTime.now(DateTimeZone.UTC), "findOneTest.txt","findOneTest.txt".bytes)
 
         when:
         TextFile savedFile = fileRepository.save(textFile);

@@ -9,6 +9,8 @@ import mmyrland.repository.FileRecordRepository;
 import mmyrland.repository.TextFileRepository;
 import mmyrland.utils.FileRecordUtils;
 import org.apache.commons.math3.util.Precision;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +39,9 @@ public class TextFileServiceImpl implements TextFileService {
 
 //NOTE: file size cannot exceed 2GB; need input stream for large files.
         byte[] content = Files.readAllBytes(file.toPath());
-        TextFile savedFile = fileRepository.save(new TextFile(file.getName(), content));
+        TextFile savedFile = fileRepository.save(
+                new TextFile(UUID.randomUUID(),DateTime.now(DateTimeZone.UTC), file.getName(), content)
+        );
 
         List<FileRecord> fileRecords = new ArrayList<>();
         FileReader reader = new FileReader(file);
@@ -48,6 +52,8 @@ public class TextFileServiceImpl implements TextFileService {
                     if (FileRecordUtils.isNumberRecord(l)) {
 //sets file_record_type = NUMBER per @DescriminatorType annotation on entities
                         NumberRecord numberRecord = new NumberRecord();
+                        numberRecord.setFileRecordId(UUID.randomUUID());
+                        numberRecord.setDateCreated(DateTime.now(DateTimeZone.UTC));
                         numberRecord.setTextFileId(savedFile.getTextFileId());
                         numberRecord.setTextFile(savedFile);
                         numberRecord.setNumberVal(Precision.round(Double.parseDouble(l), 2));
@@ -55,6 +61,8 @@ public class TextFileServiceImpl implements TextFileService {
                     } else {
                         //sets file_record_type = STRING
                         StringRecord stringRecord = new StringRecord();
+                        stringRecord.setFileRecordId(UUID.randomUUID());
+                        stringRecord.setDateCreated(DateTime.now(DateTimeZone.UTC));
                         stringRecord.setTextFileId(savedFile.getTextFileId());
                         stringRecord.setTextFile(savedFile);
                         stringRecord.setRecordText(l);

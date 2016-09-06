@@ -133,6 +133,7 @@ asciidoctor {
 
 jar {
     baseName = project.name
+    version = '0.1.0'
     dependsOn asciidoctor
     from ("${asciidoctor.outputDir}/html5") {
         into 'static/docs'

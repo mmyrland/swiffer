@@ -26,27 +26,19 @@ public class TextFile {
     @Column(name = "date_created")
     private DateTime dateCreated;
 
-    public TextFile(String textFileName,List<FileRecord> fileRecords, byte[] content, DateTime dateCreated) {
-        this.textFileId = UUID.randomUUID();
+    public TextFile(UUID textFileId,DateTime dateCreated,String textFileName,List<FileRecord> fileRecords, byte[] content) {
+        this.textFileId = textFileId;
+        this.dateCreated = dateCreated;
         this.textFileName = textFileName;
-        this.setDateCreated(DateTime.now(DateTimeZone.UTC));
         this.fileRecords = fileRecords;
         this.content = content;
         this.dateCreated = dateCreated;
     }
 
-    public TextFile(String textFileName, List<FileRecord> fileRecords, byte[] content) {
-        this.textFileId = UUID.randomUUID();
+    public TextFile(UUID textFileId,DateTime dateCreated,String textFileName, byte[] content) {
+        this.textFileId = textFileId;
         this.textFileName = textFileName;
-        this.setDateCreated(DateTime.now(DateTimeZone.UTC));
-        this.fileRecords = fileRecords;
-        this.content = content;
-    }
-
-    public TextFile(String textFileName, byte[] content) {
-        this.textFileId = UUID.randomUUID();
-        this.textFileName = textFileName;
-        this.setDateCreated(DateTime.now(DateTimeZone.UTC));
+        this.dateCreated = dateCreated;
         this.content = content;
     }
 
