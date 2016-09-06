@@ -6,6 +6,7 @@ import mmyrland.domain.NumberRecord
 import mmyrland.domain.StringRecord
 import mmyrland.domain.TextFile
 import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.test.context.ActiveProfiles
@@ -26,7 +27,7 @@ class FileRecordRepositoryIntSpec extends Specification {
         def fileText = "Line 1" +
                 "Line 2"
         def textFile = new TextFile(textFileId: fileId, textFileName: "test1file.txt", content: fileText.bytes,dateCreated: DateTime.now())
-        def object = new NumberRecord(textFileId: fileId, numberVal: 42.2d)
+        def object = new NumberRecord(textFileId: fileId,fileRecordId: UUID.randomUUID(),dateCreated: DateTime.now(DateTimeZone.UTC), numberVal: 42.2d)
 
         when:
         textFileRepository.save(textFile)

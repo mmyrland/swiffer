@@ -15,9 +15,9 @@ public class StringRecord extends FileRecord {
     @Column(name = "record_text")
     private String recordText;
 
-    public StringRecord(String recordText) {
-        this.setFileRecordId(UUID.randomUUID());
-        this.setDateCreated(DateTime.now(DateTimeZone.UTC));
+    public StringRecord(UUID fileRecordId, DateTime dateCreated,String recordText) {
+        this.setFileRecordId(fileRecordId);
+        this.setDateCreated(dateCreated);
         this.recordText =recordText;
     }
 
