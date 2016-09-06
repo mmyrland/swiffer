@@ -25,6 +25,7 @@ public class Application {
 
     }
 
+    //add to spring.profiles.active=[] set upon bootRun to nuke and pave database
     @Bean
     @Profile("cleaninitmigrate")
     public FlywayMigrationStrategy cleanInitMigrate() {

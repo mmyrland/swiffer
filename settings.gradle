@@ -1,2 +1,2 @@
 rootProject.name = 'swiffer-service'
-
+include 'swiffer-service','swiffer-api'

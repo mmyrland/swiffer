@@ -1,0 +1,104 @@
+
+apply plugin: 'spring-boot'
+apply plugin: 'org.asciidoctor.convert'
+
+
+springBoot {
+    mainClass = 'mmyrland.Application'
+}
+
+configurations {
+    testCompile.extendsFrom compile
+
+    integrationCompile.extendsFrom testCompile
+    integrationRuntime.extendsFrom testRuntime
+
+    compile.exclude group: 'commons-logging'
+}
+
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+bootRun {
+    systemProperties = System.properties
+    main = 'mmyrland.Application'
+}
+
+task integrationTest(type: Test) {
+    description = "Runs integration tests"
+    group = "verification"
+    systemProperty "spring.profiles.active", "integrationtest"
+    testClassesDir = sourceSets.integration.output.classesDir
+    classpath += sourceSets.test.runtimeClasspath + sourceSets.integration.runtimeClasspath
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStackTraces true
+    }
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    attributes 'snippets': snippetsDir
+    inputs.dir snippetsDir
+    dependsOn integrationTest
+}
+
+jar {
+    dependsOn asciidoctor
+    from ("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
+}
+
+task('copyRESTDocs', type: Copy) {
+    from(file("${asciidoctor.outputDir}/html5"))
+    into("${buildDir}/classes/main/static/docs")
+}
+
+processResources {
+    logger.lifecycle( "project.properties about to be expanded" )
+    logger.lifecycle( "----" )
+    def map = project.properties.sort { it.key }
+
+    if(logger.isEnabled(LogLevel.DEBUG)) {
+        map.each { k, v -> logger.debug("${k}:${v}") }
+    }
+
+    filesMatching('**/application-actuatorsupport.properties') {
+        expand project.properties
+    }
+}
+
+
+dependencies {
+
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
+    compile("joda-time:joda-time")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-configuration-processor")
+    compile("org.apache.commons:commons-lang3:3.4")
+    compile("org.springframework:spring-context-support")
+
+    // persistence
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    compile("org.jadira.usertype:usertype.core:5.0.0.GA")
+    compile("org.postgresql:postgresql:${postgresqlVersion}")
+    compile("org.flywaydb:flyway-core")
+
+
+    testCompile(
+            'org.springframework.restdocs:spring-restdocs-mockmvc',
+            'com.jayway.jsonpath:json-path:2.2.0',
+            'org.springframework:spring-test'
+    )
+}
+check.dependsOn -= integrationTest
+integrationTest.mustRunAfter test
+

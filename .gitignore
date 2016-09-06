@@ -1,10 +1,8 @@
 **/logs/
 .gradle
 build/
-
 .idea
 *.iml
 **/*-local.properties
-
 .DS_Store
-/src/main/resources/db/adminscripts/create_file_database.sql
+/swiffer-service/src/main/resources/db/adminscripts/create_file_database.sql

@@ -85,7 +85,7 @@ public class TextFileServiceImpl implements TextFileService {
         Integer numberCount = extractDouble(fileRecords).size();
         Integer stringCount = extractStringRecords(fileRecords).size();
 
-        FileResultsDto fileResultsDto = new FileResultsDto();
+        FileResultsDto fileResultsDto = new mmyrland.controller.dto.FileResultsDto();
         fileResultsDto.setFileName(filename);
         fileResultsDto.setTextFileId(textFileId);
         fileResultsDto.setTotalRecordCount(fileRecords.size());

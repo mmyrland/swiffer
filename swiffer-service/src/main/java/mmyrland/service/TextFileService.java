@@ -1,8 +1,8 @@
 package mmyrland.service;
 
-import mmyrland.controller.dto.FileResultsDto;
 import mmyrland.domain.FileRecord;
 import mmyrland.domain.TextFile;
+import mmyrland.controller.dto.FileResultsDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
