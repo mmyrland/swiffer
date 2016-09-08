@@ -21,7 +21,14 @@ Spring batch app that reads, processes and reports on files of a specific struct
 
 7. Hit OK and get to work.
 
+
 ## To build the application:
+* Using an admin account, log into your local postgres (need v9.4+) instance and run:
+    1. swiffer-service/src/main/resources/db/adminscripts/create_file_admin.sql
+    2. swiffer-service/src/main/resources/db/adminscripts/create_file_database.sql
+
+* Create file swiffer-service/src/main/resources/application-local.properties file and add properties per the application-local.properties.template
+
 * From the root directory, run `./gradlew build` (for Unix systems) or `gradlew.bat build` (for Windows systems)
 
 
